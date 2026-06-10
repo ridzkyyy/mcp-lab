@@ -4,12 +4,14 @@
 
 ### Postman for MCP servers — connect, explore, and test any Model Context Protocol server from your browser.
 
+[![CI](https://github.com/ridzkyyy/mcp-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/ridzkyyy/mcp-lab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 ![Status](https://img.shields.io/badge/status-MVP-orange)
 
-<!-- TODO: replace with a real demo GIF before launch — this is the single highest-leverage asset -->
-<!-- ![MCP Lab demo](./docs/demo.gif) -->
+![MCP Lab — connect to an MCP server, browse its tools, and run them from a generated form](./docs/screenshot.png)
+
+<!-- TODO before launch: record a short demo GIF and place it above the screenshot — motion converts better than a still. -->
 
 **[Live demo](#) · [Quickstart](#quickstart) · [Roadmap](#roadmap)**
 

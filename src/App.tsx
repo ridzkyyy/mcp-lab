@@ -1,121 +1,114 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { ConnectionBar } from './components/ConnectionBar/ConnectionBar'
+import { ToolList } from './components/ToolList/ToolList'
+import { ToolForm } from './components/ToolForm/ToolForm'
+import { ResultView } from './components/ResultView/ResultView'
+import { useMcpSession } from './hooks/use-mcp-session'
+import type { McpToolResult } from './types'
 import './App.css'
 
+const REPO_URL = 'https://github.com/ridzkyyy/mcp-lab'
+
 function App() {
-  const [count, setCount] = useState(0)
+  const { status, session, tools, error, connect, connectExample, disconnect } = useMcpSession()
+  const [activeTool, setActiveTool] = useState<string | null>(null)
+  const [isRunning, setIsRunning] = useState(false)
+  const [result, setResult] = useState<McpToolResult | null>(null)
+  const [callError, setCallError] = useState<string | null>(null)
+
+  const selectedTool = tools.find((tool) => tool.name === activeTool) ?? null
+
+  const resetCallState = () => {
+    setResult(null)
+    setCallError(null)
+  }
+
+  const handleSelect = (name: string) => {
+    setActiveTool(name)
+    resetCallState()
+  }
+
+  const handleRun = async (args: Record<string, unknown>) => {
+    if (!session || !selectedTool) return
+    setIsRunning(true)
+    resetCallState()
+    try {
+      const toolResult = await session.callTool(selectedTool.name, args)
+      setResult(toolResult)
+    } catch (err: unknown) {
+      setCallError(err instanceof Error ? err.message : 'Tool call failed')
+    } finally {
+      setIsRunning(false)
+    }
+  }
+
+  const handleDisconnect = () => {
+    disconnect()
+    setActiveTool(null)
+    resetCallState()
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app">
+      <header className="app__header">
+        <div className="app__brand">
+          <span className="app__logo" aria-hidden="true">🧪</span>
+          <div>
+            <h1 className="app__title">MCP Lab</h1>
+            <p className="app__tagline">Postman for MCP servers</p>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
+        <a className="app__repo" href={REPO_URL} target="_blank" rel="noopener noreferrer">
+          GitHub ★
+        </a>
+      </header>
+
+      <ConnectionBar
+        status={status}
+        serverName={session?.serverInfo.name ?? null}
+        onConnect={connect}
+        onExample={connectExample}
+        onDisconnect={handleDisconnect}
+      />
+
+      {status === 'error' && error ? (
+        <p className="app__banner" role="alert">
+          {error}
+        </p>
+      ) : null}
+
+      {status === 'connected' ? (
+        <main className="app__workspace">
+          <aside className="app__sidebar">
+            <ToolList tools={tools} activeTool={activeTool} onSelect={handleSelect} />
+          </aside>
+          <section className="app__panel">
+            {selectedTool ? (
+              <ToolForm key={selectedTool.name} tool={selectedTool} isRunning={isRunning} onRun={handleRun} />
+            ) : (
+              <p className="app__placeholder">Select a tool from the left to call it.</p>
+            )}
+            <ResultView result={result} error={callError} />
+          </section>
+        </main>
+      ) : (
+        <section className="app__hero" aria-labelledby="hero-heading">
+          <h2 id="hero-heading">Connect to an MCP server</h2>
           <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+            Paste a server URL above, or click <strong>Try example</strong> to explore a built-in mock
+            server — no setup, no install. List its tools, fill in the generated form, and read the
+            result formatted instead of raw JSON-RPC.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        </section>
+      )}
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <footer className="app__footer">
+        MVP · HTTP &amp; SSE transports ·{' '}
+        <a href={`${REPO_URL}/blob/main/ROADMAP.md`} target="_blank" rel="noopener noreferrer">
+          roadmap
+        </a>
+      </footer>
+    </div>
   )
 }
 

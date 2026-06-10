@@ -1,0 +1,37 @@
+.connection-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.connection-bar__url {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.connection-bar__transport {
+  flex: 0 0 auto;
+}
+
+.connection-bar--connected {
+  gap: var(--space-3);
+}
+
+.connection-bar__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-ok);
+  box-shadow: 0 0 0 3px oklch(74% 0.16 155 / 0.2);
+}
+
+.connection-bar__server {
+  margin-right: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
