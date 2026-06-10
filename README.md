@@ -42,7 +42,7 @@ npm run dev
 
 Open `http://localhost:5173`, paste an MCP server endpoint, and start calling tools.
 
-> Trying it out? Spin up any HTTP-transport MCP server (or use the bundled example endpoint) and connect.
+> Trying it out? Spin up any HTTP-transport MCP server (or use the bundled example endpoint) and connect. Want something meatier? [**fleet-mcp**](https://github.com/ridzkyyy/fleet-mcp) serves a simulated GPS fleet — trucks, geofences, NMEA — built to be explored from MCP Lab: `node dist/index.js --http` and connect to `http://localhost:8137/mcp`.
 
 ## How it works
 
