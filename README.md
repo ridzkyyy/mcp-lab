@@ -66,11 +66,9 @@ MCP Lab talks the MCP protocol directly over HTTP-based transports. (stdio serve
 - [ ] Auth presets (headers, bearer tokens)
 - [ ] Request history & diffing
 
-See [ROADMAP.md](./ROADMAP.md) for detail.
-
 ## Contributing
 
-Issues and PRs welcome — especially transport adapters, schema-form edge cases, and result renderers. See [ROADMAP.md](./ROADMAP.md) for where help lands best.
+Issues and PRs welcome — especially transport adapters, schema-form edge cases, and result renderers.
 
 ## License
 

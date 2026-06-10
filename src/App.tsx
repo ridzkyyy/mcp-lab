@@ -104,7 +104,7 @@ function App() {
 
       <footer className="app__footer">
         MVP · HTTP &amp; SSE transports ·{' '}
-        <a href={`${REPO_URL}/blob/main/ROADMAP.md`} target="_blank" rel="noopener noreferrer">
+        <a href={`${REPO_URL}#roadmap`} target="_blank" rel="noopener noreferrer">
           roadmap
         </a>
       </footer>
