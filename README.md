@@ -9,9 +9,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 ![Status](https://img.shields.io/badge/status-MVP-orange)
 
-![MCP Lab — connect to an MCP server, browse its tools, and run them from a generated form](./docs/screenshot.png)
-
-<!-- TODO before launch: record a short demo GIF and place it above the screenshot — motion converts better than a still. -->
+![MCP Lab demo — connect to the example MCP server, pick a tool, fill the schema-generated form, run it, and read the formatted result](./docs/demo.gif)
 
 **[▶ Live demo](https://mcp-lab.vercel.app) · [Quickstart](#quickstart) · [Roadmap](#roadmap)**
 
