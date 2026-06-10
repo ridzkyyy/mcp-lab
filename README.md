@@ -13,7 +13,7 @@
 
 <!-- TODO before launch: record a short demo GIF and place it above the screenshot — motion converts better than a still. -->
 
-**[Live demo](#) · [Quickstart](#quickstart) · [Roadmap](#roadmap)**
+**[▶ Live demo](https://mcp-lab.vercel.app) · [Quickstart](#quickstart) · [Roadmap](#roadmap)**
 
 </div>
 
